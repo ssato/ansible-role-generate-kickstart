@@ -1,20 +1,14 @@
-=====================
-ssato.openssl-cert
-=====================
+# ssato.openssl-cert
 
-ssato.openssl-cert is an ansible role to generate TLS cert files.
+A ansible role to generate TLS cert files with using openssl command.
 
-.. image:: https://img.shields.io/travis/ssato/ansible-role-openssl-cert.png
-   :target: https://travis-ci.org/ssato/ansible-role-openssl-cert
-   :alt: [Test status]
+[![Build Status](https://img.shields.io/travis/ssato/ansible-role-openssl-cert.png)](https://travis-ci.org/ssato/ansible-role-openssl-cert)
 
-Requirements
-==============
+## Requirements
 
 - openssl
 
-Role Variables
-================
+## Role Variables
 
 Variables should be customized for your use cases.
 
@@ -38,19 +32,17 @@ Variables do not need to be customized for most cases.
 
 see defaults/main.yml for default definitions of each variables.
 
-Example Playbook
-====================
+## Example Playbook
 
 see tests/test.yml
 
-License
-===========
+## License
 
 MIT
 
-Author
-==========
+## Author
 
 Satoru SATOH `ssato@Github <https://github.com/ssato>`_
 
-.. vim:sw=2:ts=2:et:
+<!-- vim:sw=2:ts=2:et:
+-->
