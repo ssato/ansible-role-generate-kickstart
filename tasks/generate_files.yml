@@ -1,0 +1,52 @@
+---
+- name: Generate a private key
+  command: "openssl genrsa -out {{ key_filename }} {{ openssl_cert.key_bits }}"
+    chdir: "{{ openssl_cert.workdir }}"
+    creates: "{{ openssl_cert.workdir }}/{{ key_filename }}.stamp"
+  vars:
+    key_filename: "{{ openssl_cert.common_name }}.key"
+
+- name: Generate a CSR file
+  command: "openssl req -new -key {{ key_filename }} -subj '{{ subject }}' -out {{ csr_filename }}"
+    chdir: "{{ openssl_cert.workdir }}"
+    creates: "{{ openssl_cert.workdir }}/{{ csr_filename }}.stamp"
+  vars:
+    key_filename: "{{ openssl_cert.common_name }}.key"
+    csr_filename: "{{ openssl_cert.common_name }}.csr"
+    subject: "/C={{ openssl_cert.country }}/ST={{ openssl_cert.state }}/O={{ openssl_cert.organization }}/OU={{ openssl_cert.unit }}/CN={{ openssl_cert.common_name }}"
+
+# for self-signed certs:
+- name: Generate CA SRL file
+  command: "echo 10 > {{ ca_srl_filename }}"
+    chdir: "{{ openssl_cert.workdir }}"
+  vars:
+    ca_srl_filename: "{{ openssl_cert.common_name }}_ca.srl"
+  when:
+    - openssl_cert.generate_self_signed_cert is defined
+    - openssl_cert.generate_self_signed_cert
+
+- name: Generate CA key and cert files at once
+  command: "openssl req -new -x509 -extensions v3_ca -days {{ openssl_cert.days }} -nodes -keyout {{ ca_key_filename }} -subj '{{ openssl_cert.common_name }} CA' -out {{ ca_crt_filename }}"
+    chdir: "{{ openssl_cert.workdir }}"
+  vars:
+    ca_key_filename: "{{ openssl_cert.common_name }}_ca.key"
+    ca_crt_filename: "{{ openssl_cert.common_name }}_ca.crt"
+  when:
+    - openssl_cert.generate_self_signed_cert is defined
+    - openssl_cert.generate_self_signed_cert
+
+- name: Generate a self-signed certificate
+  command: "openssl x509 -req -days {{ openssl_cert.days }} -CA {{ ca_crt_filename }} -CAkey {{ ca_key_filename }} -in {{ csr_filename }} -out {{ crt_filename }}"
+    chdir: "{{ openssl_cert.workdir }}"
+    creates: "{{ openssl_cert.workdir }}/{{ crt_filename }}.stamp"
+  vars:
+    csr_filename: "{{ openssl_cert.common_name }}.csr"
+    crt_filename: "{{ openssl_cert.common_name }}.crt"
+    ca_key_filename: "{{ openssl_cert.common_name }}_ca.key"
+    ca_crt_filename: "{{ openssl_cert.common_name }}_ca.crt"
+    subject: "/C={{ openssl_cert.country }}/ST={{ openssl_cert.state }}/O={{ openssl_cert.organization }}/OU={{ openssl_cert.unit }}/CN={{ openssl_cert.common_name }}"
+  when:
+    - openssl_cert.generate_self_signed_cert is defined
+    - openssl_cert.generate_self_signed_cert
+
+# vim:sw=2:ts=2:et:

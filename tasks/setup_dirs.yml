@@ -1,0 +1,8 @@
+---
+- name: Setup working dirs
+  file:
+    state: directory
+    path: "{{ openssl_cert.workdir }}"
+    mode: 0700
+
+# vim:sw=2:ts=2:et:
