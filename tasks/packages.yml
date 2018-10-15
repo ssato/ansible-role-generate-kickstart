@@ -1,7 +1,13 @@
 ---
+- name: Check if necessary command was installed
+  command: "openssl version"
+  register: cmd_check
+
 - name: Install packages
   package:
-    name: "{{ openssl_cert.packages }}"
+    name: "{{ openssl_cert_packages }}"
     state: present
+  when:
+    cmd_check.rc != 0
 
 # vim:sw=2:ts=2:et:
