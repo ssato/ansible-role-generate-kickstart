@@ -1,5 +1,22 @@
 ---
-openssl_cert_packages:
-  - openssl
+openssl_cert:
+  debug: true
+
+  packages:
+    - openssl
+
+  common_name: www.example.com
+  country: JP
+  state: Tokyo
+  organization: Example, Inc.
+  unit: Security Div.
+
+  days: 3650
+  key_bits: 2048
+
+  workdir: /tmp/openssl_cert
+
+  # for tests
+  generate_self_signed_cert: true
 
 # vim:sw=2:ts=2:et:
