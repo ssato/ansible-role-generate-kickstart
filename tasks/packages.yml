@@ -2,6 +2,7 @@
 - name: Check if necessary command was installed
   command: "openssl version"
   register: cmd_check
+  changed_when: false
 
 - name: Install packages
   package:
