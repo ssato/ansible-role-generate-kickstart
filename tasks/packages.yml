@@ -1,8 +1,7 @@
 ---
 - name: Install packages
   package:
-    name: "{{ item }}"
+    name: "{{ openssl_cert.packages }}"
     state: present
-  with_items: "{{ openssl_cert_packages }}"
 
 # vim:sw=2:ts=2:et:
