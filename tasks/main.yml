@@ -1,9 +1,5 @@
 ---
 - include: debug.yml
-  when:
-    - openssl_cert is defined and openssl_cert
-    - openssl_cert.debug is defined and openssl_cert.debug
-
 - include: packages.yml
 - include: setup_dirs.yml
 - include: generate_files.yml
