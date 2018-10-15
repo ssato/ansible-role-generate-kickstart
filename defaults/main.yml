@@ -15,6 +15,6 @@ openssl_cert_key_bits: 4096
 openssl_cert_workdir: /tmp/openssl_cert
 
 # for tests
-openssl_cert_generate_self_signed_cert: true
+openssl_cert_generate_self_signed_cert: false
 
 # vim:sw=2:ts=2:et:
