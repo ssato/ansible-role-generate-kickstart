@@ -1,9 +1,10 @@
+---
 language: python
 install:
   - pip install -r requirements.txt
   - sudo apt-get install openssl
+# - ansible-galaxy install -r tests/requirements.yml -p tests/roles
 
-#- ansible-galaxy install -r tests/requirements.yml -p tests/roles
 before_script:
   - ansible --version
 
