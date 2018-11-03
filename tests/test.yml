@@ -4,3 +4,11 @@
   connection: local
   roles:
     - ssato.openssl-cert
+
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    openssl_cert_generate_self_signed_cert: true
+  roles:
+    - ssato.openssl-cert
