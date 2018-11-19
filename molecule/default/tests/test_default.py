@@ -6,9 +6,6 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
     os.environ['MOLECULE_INVENTORY_FILE']).get_hosts('all')
 
 
-def test_hosts_file(host):
-    f = host.file('/etc/hosts')
-
-    assert f.exists
-    assert f.user == 'root'
-    assert f.group == 'root'
+# .. seealso:: https://testinfra.readthedocs.io/en/latest/modules.html#package
+def test_openssl_package_is_installed(host):
+    assert host.package('openssl').is_installed
