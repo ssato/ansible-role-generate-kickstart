@@ -1,5 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  gather_facts: false
+  remote_user: root
+  become: true
   roles:
-    - role: ssato.openssl-cert
+    - ssato.openssl-cert
