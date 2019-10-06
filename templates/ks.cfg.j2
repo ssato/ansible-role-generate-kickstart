@@ -1,0 +1,122 @@
+# .. seealso:: RHEL 7: http://red.ht/1C32yhj
+install
+cdrom
+text
+bootloader --append="quiet {{ gen_ks_bootloader.append }}"
+keyboard --vckeymap={{ gen_ks_keyboard.keymap }} --xlayouts={{ gen_ks_keyboard.layout }}
+lang {{ gen_ks_lang }}
+rootpw {{ gen_ks_rootpw }}
+timezone {{ gen_ks_timezone.zone -}}
+         {{ '--utc' if gen_ks_timezone.utc else '' -}}
+         {% if gen_ks_timezone.ntpservers -%}
+         --ntpservers={{ gen_ks_timezone.ntpservers | join(',') -}}
+         {% endif %}
+selinux --enforcing
+skipx
+authconfig --enableshadow --passalgo=sha512
+firewall --enabled --ssh
+services --enabled {{ gen_ks_system_services.enabled | join(',') -}}
+         {% if gen_ks_system_services.enabled -%}
+         --disabled {{ gen_ks_system_services.enabled | join(',') -}}
+         {% endif %}
+# network
+{% for _nic in gen_ks_networks -%}
+network --device={{ _nic.device -}}
+        --onboot={{ 'yes' if _nic.onboot | d(true) else 'no' -}}
+        {% if _nic.activate is defined -%}
+        {%     if _nic.activate -%}
+        {%         if not loop.first %}--activate{% endif -%}
+        {%     else -%}--no-activate{% endif -%}
+        {% endif -%}
+        {% if _nic.nameservers | d() -%}
+        {%     for _ns in _nic.nameservers -%}
+                   --nameserver={{ _ns -}}
+        {%     endfor -%}
+        {% endif -%}
+        {% if _nic.hostname | d() -%}
+        --hostname={{ _nic.hostname -}}
+        {% endif -%}
+        {% if _nic.ip -%}
+        --bootproto=static --ip={{ _nic.ip }} --netmask={{ _nic.netmask -}}
+        {%     if _nic.gateway -%}
+        --gateway={{ _nic.gateway -}}
+        {%     else %}--nodefroute{% endif -%}
+        {% else -%}
+        --bootproto=dhcp
+        {% endif %}
+{% endfor %}
+{% if gen_ks_partitions | d() -%}
+{%     for _part in gen_ks_partitions -%}
+{{         _part }}
+{%     endfor %}
+{% else -%}
+%include /tmp/partitions-ks.cfg
+{% endif %}
+reboot
+
+%packages --ignoremissing
+{% for _pkg in gen_ks_packages.installed -%}
+{{     _pkg }}
+{% endfor %}
+{% for _pkg in gen_ks_packages.uninstalled -%}
+-{{     _pkg }}
+{% endfor %}
+%end
+
+%pre  --log=/tmp/ks-pre.log
+{% if not gen_ks_partitions | d() -%}
+if test -b /dev/vda; then disk_initial_char="v"
+elif test -b /dev/sda; then disk_initial_char="s"
+elif test -b /dev/hda; then disk_initial_char="h"
+else
+    echo "Cannot detect disk type"
+    exit 1
+fi
+grep -q ${disk_initial_char}da /proc/partitions 2>/dev/null && \
+    disk0=${disk_initial_char}da
+grep -q ${disk_initial_char}db /proc/partitions 2>/dev/null && \
+    disk1=${disk_initial_char}db
+
+if `grep -q ${disk1}2 /proc/partitions 2>/dev/null`; then
+    # keep contents in disk1 if any partitions exist.
+    part_ks_preamble="zerombr
+# FIXME: This line causes hiding ${disk1} from anaconda.
+#ignoredisk --only-use=${disk0}
+clearpart --all --initlabel --drives=${disk0}
+# data disk partition:
+part {{ gen_ks_data_part_mnt }} --onpart=${disk1}2 --noformat
+"
+fi
+
+cat << EOF > /tmp/partitions-ks.cfg
+${part_ks_preamble:?}
+part /boot  --size=1024 --ondisk=${disk0} --asprimary
+part pv.100 --size=1    --ondisk=${disk0} --grow
+volgroup vg0 pv.100
+logvol /                  --name=lv_root --vgname=vg0 --size=1 --grow
+logvol swap --fstype swap --name=lv_swap --vgname=vg0 --size=4096
+EOF
+{% endif %}
+%end
+
+%post --nochroot  --log=/mnt/sysimage/root/ks-post-nochroot.log
+test -d /mnt/sysimage/root/setup || mkdir -p /mnt/sysimage/root/setup
+test -f /tmp/boot-params && cp -f /tmp/boot-params /mnt/sysimage/root/setup
+%end
+
+%post  --log=/root/ks-post.log
+for keyfile in /etc/pki/rpm-gpg/RPM-GPG-KEY-*-release; do
+    rpm --import ${keyfile} || :
+done
+
+f=/root/.bashrc
+test -f $f && \
+echo "export LC_ALL=en_US.UTF-8" >> $f || \
+(cat << EOF > $f
+test -f /etc/bashrc && . /etc/bashrc || :
+export LC_ALL=en_US.UTF-8
+EOF
+)
+test -d /root/setup || mkdir -p /root/setup
+touch /root/setup/kickstart.post.stamp
+%end
