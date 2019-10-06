@@ -11,14 +11,16 @@ timezone {{ gen_ks_timezone.zone -}}
          {% if gen_ks_timezone.ntpservers -%}
          --ntpservers={{ gen_ks_timezone.ntpservers | join(',') -}}
          {% endif %}
+
 selinux --enforcing
 skipx
 authconfig --enableshadow --passalgo=sha512
 firewall --enabled --ssh
-services --enabled {{ gen_ks_system_services.enabled | join(',') -}}
-         {% if gen_ks_system_services.enabled -%}
+
+services --enabled {{ gen_ks_system_services.enabled | join(',') }} {% if gen_ks_system_services.enabled -%}
          --disabled {{ gen_ks_system_services.enabled | join(',') -}}
          {% endif %}
+
 # network
 {% for _nic in gen_ks_networks -%}
 network --device={{ _nic.device -}}
