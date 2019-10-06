@@ -5,7 +5,7 @@
       - gen_ks_repos is defined
       - gen_ks_repos is sequence
       - gen_ks_disks is defined
-      - gen_ks_disks is string
+      - gen_ks_disks is sequence
       - gen_ks_disks
       - gen_ks_keyboard | d()
       - gen_ks_keyboard is mapping
@@ -18,12 +18,12 @@
       - gen_ks_system_services | d()
       - gen_ks_system_services.enabled | d()
       - gen_ks_system_services.enabled is sequence
-      - gen_ks_system_services.disabled | d()
+      - gen_ks_system_services.disabled is defined
       - gen_ks_system_services.disabled is sequence
       - gen_ks_timezone | d()
       - gen_ks_timezone.zone | d()
       - gen_ks_timezone.utc is defined
-      - gen_ks_timezone.ntpservers | d()
+      - gen_ks_timezone.ntpservers is defined
       - gen_ks_timezone.ntpservers is sequence
       - gen_ks_bootloader | d()
       - gen_ks_bootloader.append is defined

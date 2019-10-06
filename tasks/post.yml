@@ -1,6 +1,7 @@
 ---
 - name: Test output files exist
   command: "test -f {{ item }}"
+  changed_when: false
   loop:
     - "{{ gen_ks_outdir }}/{{ gen_ks_name }}.cfg"
     - "{{ gen_ks_outdir }}/{{ gen_ks_name }}.iso"

@@ -14,9 +14,18 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  inventory:
+  group_vars:
+    all:
+      gen_ks_name: centos-7-ks
+      # yamllint disable-line rule:line-length
+      gen_ks_rootpw: secret
+
 scenario:
   name: default
 verifier:
   name: testinfra
   lint:
     name: flake8
+
+# vim:sw=2:ts=2:et:

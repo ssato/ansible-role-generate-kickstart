@@ -12,11 +12,15 @@
 - name: Validate generated ks.cfg
   command: >-
     ksvalidator -v {{ gen_ks_validator_version }} {{ _ks_cfg_filename }}
+  args:
     chdir: "{{ gen_ks_outdir }}"
+  changed_when: false
 
 - name: Generate ks.cfg image
   command: >-
     mkisofs -R -J -o {{ gen_ks_name }}.iso {{ _ks_cfg_filename }}
+  args:
     chdir: "{{ gen_ks_outdir }}"
+  changed_when: false
 
 # vim:sw=2:ts=2:et:
