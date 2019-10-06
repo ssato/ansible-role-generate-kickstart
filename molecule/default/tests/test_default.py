@@ -7,5 +7,5 @@ testinfra_hosts = testinfra.utils.ansible_runner.AnsibleRunner(
 
 
 # .. seealso:: https://testinfra.readthedocs.io/en/latest/modules.html#package
-def test_openssl_package_is_installed(host):
-    assert host.package('openssl').is_installed
+def test_pykickstart_is_installed(host):
+    assert host.package('pykickstart').is_installed
