@@ -1,0 +1,62 @@
+---
+- name: Test variables are OK
+  assert:
+    that:
+      - gen_ks_repos is defined
+      - gen_ks_repos is sequence
+      - gen_ks_disks is defined
+      - gen_ks_disks is string
+      - gen_ks_disks
+      - gen_ks_keyboard | d()
+      - gen_ks_keyboard is mapping
+      - gen_ks_lang | d()
+      - gen_ks_lang is string
+      - gen_ks_networks is defined
+      - gen_ks_networks is sequence
+      - gen_ks_rootpw | d()
+      - gen_ks_rootpw is string
+      - gen_ks_system_services | d()
+      - gen_ks_system_services.enabled | d()
+      - gen_ks_system_services.enabled is sequence
+      - gen_ks_system_services.disabled | d()
+      - gen_ks_system_services.disabled is sequence
+      - gen_ks_timezone | d()
+      - gen_ks_timezone.zone | d()
+      - gen_ks_timezone.utc is defined
+      - gen_ks_timezone.ntpservers | d()
+      - gen_ks_timezone.ntpservers is sequence
+      - gen_ks_bootloader | d()
+      - gen_ks_bootloader.append is defined
+      - gen_ks_partitions is defined
+      - gen_ks_partitions is sequence
+      - gen_ks_data_part_mnt | d()
+      - gen_ks_data_part_mnt is string
+      - gen_ks_packages | d()
+      - gen_ks_packages.installed is defined
+      - gen_ks_packages.installed | d() is sequence
+      - gen_ks_packages.uninstalled is defined
+      - gen_ks_packages.uninstalled | d() is sequence
+      - gen_ks_name | d()
+      - gen_ks_name is string
+      - gen_ks_outdir | d()
+      - gen_ks_outdir is string
+      - gen_ks_validator_version | d()
+      - gen_ks_validator_version is string
+    fail_msg: |
+      gen_ks_repos: {{ gen_ks_repos | d([]) }}
+      gen_ks_disks: {{ gen_ks_disks | d([]) }}
+      gen_ks_keyboard: {{ gen_ks_keyboard | d() }}
+      gen_ks_lang: {{ gen_ks_lang | d('') }}
+      gen_ks_networks: {{ gen_ks_networks | d([]) }}
+      gen_ks_rootpw: {{ gen_ks_rootpw | d('') }}
+      gen_ks_system_services: {{ gen_ks_system_services | d() }}
+      gen_ks_timezone: {{ gen_ks_timezone | d() }}
+      gen_ks_bootloader: {{ gen_ks_bootloader | d() }}
+      gen_ks_partitions: {{ gen_ks_partitions | d([]) }}
+      gen_ks_data_part_mnt: {{ gen_ks_data_part_mnt | d() }}
+      gen_ks_packages: {{ gen_ks_packages | d() }}
+      gen_ks_name: {{ gen_ks_name | d () }}
+      gen_ks_outdir: {{ gen_ks_outdir | d () }}
+      gen_ks_validator_version: {{ gen_ks_validator_version | d () }}
+
+# vim:sw=2:ts=2:et:

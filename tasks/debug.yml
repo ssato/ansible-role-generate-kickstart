@@ -1,8 +1,0 @@
----
-- debug:
-    msg: "openssl_cert_packages={{ openssl_cert_packages }} openssl_cert_common_name={{ openssl_cert_common_name }} openssl_cert_country={{ openssl_cert_country }} openssl_cert_state={{ openssl_cert_state }} openssl_cert_organization={{ openssl_cert_organization }} openssl_cert_unit={{ openssl_cert_unit }} openssl_cert_days={{ openssl_cert_days }} openssl_cert_key_bits={{ openssl_cert_key_bits }} openssl_cert_workdir={{ openssl_cert_workdir }} openssl_cert_generate_self_signed_cert={{ openssl_cert_generate_self_signed_cert }}"
-  when:
-    - openssl_cert_debug is defined
-    - openssl_cert_debug
-
-# vim:sw=2:ts=2:et:

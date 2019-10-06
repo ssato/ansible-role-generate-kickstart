@@ -1,12 +1,13 @@
 # ssato.openssl-cert
 
-A ansible role to generate TLS cert files with using openssl command.
+A ansible role to generate kickstart installation files.
 
-[![Build Status](https://img.shields.io/travis/ssato/ansible-role-openssl-cert.png)](https://travis-ci.org/ssato/ansible-role-openssl-cert)
+[![Build Status](https://img.shields.io/travis/ssato/ansible-role-generate-kickstart.png)](https://travis-ci.org/ssato/ansible-role-generate-kickstart)
 
 ## Requirements
 
-- openssl
+- pykickstart (pykickstart)
+- mkisofs (genisoimage)
 
 ## Role Variables
 

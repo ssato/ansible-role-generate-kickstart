@@ -1,3 +1,4 @@
 ansible
 yamllint
 ansible-lint
+pykickstart

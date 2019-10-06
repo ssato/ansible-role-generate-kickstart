@@ -1,0 +1,8 @@
+---
+- name: Test output files exist
+  command: "test -f {{ item }}"
+  loop:
+    - "{{ gen_ks_outdir }}/{{ gen_ks_name }}.cfg"
+    - "{{ gen_ks_outdir }}/{{ gen_ks_name }}.iso"
+
+# vim:sw=2:ts=2:et:

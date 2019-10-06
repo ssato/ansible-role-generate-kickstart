@@ -2,7 +2,12 @@
 - name: Converge
   hosts: all
   gather_facts: false
-  remote_user: root
-  become: true
+
+  pre_tasks:
+    - name: Prepare working dirs
+      file:
+        path: "{{ gen_ks_outdir }}"
+        state: directory
+
   roles:
-    - ssato.openssl-cert
+    - ssato.generate_kickstart

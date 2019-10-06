@@ -1,0 +1,22 @@
+---
+- name: Set ks.cfg filename
+  set_fact:
+    _ks_cfg_filename: "{{ gen_ks_name }}.cfg"
+
+- name: Generate ks.cfg
+  template:
+    src: ks.cfg.j2
+    dest: >-
+      {{ gen_ks_outdir }}/{{ _ks_cfg_filename }}
+
+- name: Validate generated ks.cfg
+  command: >-
+    ksvalidator -v {{ gen_ks_validator_version }} {{ _ks_cfg_filename }}
+    chdir: "{{ gen_ks_outdir }}"
+
+- name: Generate ks.cfg image
+  command: >-
+    mkisofs -R -J -o {{ gen_ks_name }}.iso {{ _ks_cfg_filename }}
+    chdir: "{{ gen_ks_outdir }}"
+
+# vim:sw=2:ts=2:et:

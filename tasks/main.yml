@@ -1,7 +1,6 @@
 ---
-- include: debug.yml
-- include: packages.yml
-- include: setup_dirs.yml
-- include: generate_files.yml
+- include_tasks: pre.yml
+- include_tasks: gen_kickstart.yml
+- include_tasks: post.yml
 
 # vim:sw=2:ts=2:et:

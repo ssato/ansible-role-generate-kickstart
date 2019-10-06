@@ -1,10 +1,10 @@
 ---
 galaxy_info:
   author: Satoru SATOH
-  description: Generate SSL cert files with using openssl command
+  description: Generate Kickstart installation files
   # company: Red Hat, Inc.
 
-  issue_tracker_url: https://github.com/ssato/ansible-role-openssl-cert/issues
+  issue_tracker_url: https://github.com/ssato/ansible-role-generate-kickstart/issues
   license: MIT
 
   min_ansible_version: 2.1
@@ -12,29 +12,17 @@ galaxy_info:
   platforms:
     - name: Fedora
       versions:
-        # - all
-        - 27
-        - 28
-        - 29
-    - name: Ubuntu
-      versions:
         - all
 
-    - name: Debian
-      versions:
-        - all
     - name: EL
       versions:
         - 7
+        - 8
 
   galaxy_tags:
     - system
-    - certificate
-    - openssl
-    - security
-    - ssl
-    - tls
-    - pki
+    - packaging
+    - cloud
 
 dependencies: []
 

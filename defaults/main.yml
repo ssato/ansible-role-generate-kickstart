@@ -1,20 +1,101 @@
 ---
-openssl_cert_debug: true
-openssl_cert_packages:
-  - openssl
 
-openssl_cert_common_name: www.example.com
-openssl_cert_country: JP
-openssl_cert_state: Tokyo
-openssl_cert_organization: Example, Inc.
-openssl_cert_unit: Security Div.
+# Example.
+# gen_ks_repos:
+#   - name: Server-HighAvailability
+#     baseurl: file:///run/install/repo/addons/HighAvailability
+#   - name: Server-ResilientStorage
+#     baseurl: file:///run/install/repo/addons/ResilientStorage
+#
+gen_ks_repos: []
 
-openssl_cert_days: 3650
-openssl_cert_key_bits: 4096
+gen_ks_disks:
+  - sda
 
-openssl_cert_workdir: /tmp/openssl_cert
+gen_ks_bootloader:
+  append:
 
-# for tests
-openssl_cert_generate_self_signed_cert: false
+gen_ks_keyboard:
+  keymap: us
+  layout: us
+
+gen_ks_lang: en_US.UTF-8
+
+# yamllint disable rule:line-length
+#
+# How to generate encrypted password string?
+#   python3 -c 'import crypt,getpass;pw=getpass.getpass();print(crypt.crypt(pw) if (pw==getpass.getpass("Confirm: ")) else exit())'
+#
+# Example.
+# gen_ks_rootpw: >-
+#   --iscrypted $6$k4DvWzU/zLtN2eFb$NJbJaRiZpXUTNgud73KuBPmnsv051dS58zwj1VRG5dBphLWk.M9sz1zKvqCtTAzrEyqcjaCCGpvA/VIBMFVW20
+#
+# yamllint enable rule:line-length
+gen_ks_rootpw:
+
+gen_ks_timezone:
+  zone: Asia/Tokyo
+  utc: true
+  ntpservers: []
+
+gen_ks_system_services:
+  enabled:
+    - firewalld
+    - sshd
+  disabled: []
+
+# Example.
+# gen_ks_networks:
+#   - device: eth0
+#     ip: 192.168.122.100
+#     netmask: 255.255.255.0
+#     gateway: 192.168.122.1
+#     nameservers:
+#       - 8.8.8.8
+#     hostname: rhel-7-7-0.example.jp
+#
+#   - bootproto: dhcp
+#     device: ens160
+#     onboot: false
+#     activate: false
+#
+gen_ks_networks: []
+
+# Example.
+# gen_ks_partitions:
+#   - part /boot  --size=1024 --ondisk=sda --asprimary
+#   - part pv.100 --size=1    --ondisk=sda --grow
+#   - volgroup vg0 pv.100
+#   - logvol /                  --name=lv_root --vgname=vg0 --size=1 --grow
+#   - logvol swap --fstype swap --name=lv_swap --vgname=vg0 --size=4096
+gen_ks_partitions: []
+gen_ks_data_part_mnt: /data
+
+gen_ks_packages:
+  installed:
+    - curl
+    - lftp
+    - make
+    - sos
+    - strace
+    - tcpdump
+    - vim-enhanced
+    - xz
+  uninstalled:
+    - "*-Release_Notes-*"
+    - "*-firmware"
+    - wireless-tools
+    - wpa_supplicant
+
+# Example.
+# gen_ks_name: rhel-7.7-host-001-ks
+# # ks.cfg -> rhel-7.7-host-001-ks.cfg
+# # ks.cfg iso image -> rhel-7.7-host-001-ks.iso
+gen_ks_name:
+
+gen_ks_outdir: files/
+
+# .. seealso:: `ksvalidator -l`
+gen_ks_validator_version: RHEL7
 
 # vim:sw=2:ts=2:et:
