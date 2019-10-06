@@ -1,0 +1,17 @@
+---
+- hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    gen_ks_name: centos-7-ks
+    gen_ks_rootpw: secret
+
+  pre_tasks:
+    - name: Prepare working dirs
+      file:
+        path: "{{ gen_ks_outdir }}"
+        state: directory
+
+  roles:
+    - ssato.generate_kickstart
+
