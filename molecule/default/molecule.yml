@@ -18,8 +18,8 @@ provisioner:
     group_vars:
       all:
         gen_ks_name: centos-7-ks
-        # yamllint disable-line rule:line-length
         gen_ks_rootpw: secret
+        gen_ks_outdir: /tmp/ssato.generate_kickstart
 
 scenario:
   name: default
