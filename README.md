@@ -1,4 +1,4 @@
-# ssato.openssl-cert
+# ssato.generate_kickstart
 
 A ansible role to generate kickstart installation files.
 
