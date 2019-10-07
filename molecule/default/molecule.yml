@@ -15,11 +15,11 @@ provisioner:
   lint:
     name: ansible-lint
   inventory:
-  group_vars:
-    all:
-      gen_ks_name: centos-7-ks
-      # yamllint disable-line rule:line-length
-      gen_ks_rootpw: secret
+    group_vars:
+      all:
+        gen_ks_name: centos-7-ks
+        # yamllint disable-line rule:line-length
+        gen_ks_rootpw: secret
 
 scenario:
   name: default
