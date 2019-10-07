@@ -6,7 +6,7 @@
       - gen_ks_repos is sequence
       - gen_ks_disks is defined
       - gen_ks_disks is sequence
-      - gen_ks_disks
+      - gen_ks_disks | length > 0
       - gen_ks_keyboard | d()
       - gen_ks_keyboard is mapping
       - gen_ks_lang | d()
