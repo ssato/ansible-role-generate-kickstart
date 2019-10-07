@@ -1,4 +1,5 @@
 ---
+# yamllint disable rule:line-length
 language: python
 install:
   - pip install -r requirements.txt

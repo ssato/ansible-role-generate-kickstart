@@ -4,6 +4,7 @@ galaxy_info:
   description: Generate Kickstart installation files
   # company: Red Hat, Inc.
 
+  # yamllint disable-line rule:line-length
   issue_tracker_url: https://github.com/ssato/ansible-role-generate-kickstart/issues
   license: MIT
 
