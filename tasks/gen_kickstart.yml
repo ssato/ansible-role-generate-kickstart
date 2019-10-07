@@ -1,24 +1,28 @@
 ---
 - name: Set ks.cfg filename
   set_fact:
-    _ks_cfg_filename: "{{ gen_ks_name }}.cfg"
+    _ks_file: "{{ gen_ks_name }}.cfg"
+
+- name: Prepare working dir to output results
+  file:
+    path: "{{ gen_ks_outdir }}"
+    state: directory
 
 - name: Generate ks.cfg
   template:
     src: ks.cfg.j2
-    dest: >-
-      {{ gen_ks_outdir }}/{{ _ks_cfg_filename }}
+    dest: "{{ gen_ks_outdir }}/{{ _ks_file }}"
 
 - name: Validate generated ks.cfg
   command: >-
-    ksvalidator -v {{ gen_ks_validator_version }} {{ _ks_cfg_filename }}
+    ksvalidator -v {{ gen_ks_validator_version }} {{ _ks_file }}
   args:
     chdir: "{{ gen_ks_outdir }}"
   changed_when: false
 
 - name: Generate ks.cfg image
   command: >-
-    mkisofs -R -J -o {{ gen_ks_name }}.iso {{ _ks_cfg_filename }}
+    mkisofs -R -J -o {{ gen_ks_name }}.iso {{ _ks_file }}
   args:
     chdir: "{{ gen_ks_outdir }}"
   changed_when: false
