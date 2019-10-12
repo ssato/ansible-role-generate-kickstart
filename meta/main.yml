@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: ssato.generate_kickstart
   author: Satoru SATOH
   description: Generate Kickstart installation files
   # company: Red Hat, Inc.
