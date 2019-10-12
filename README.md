@@ -19,7 +19,7 @@ MIT
 
 ## Author
 
-Satoru SATOH `ssato@Github <https://github.com/ssato>`
+Satoru SATOH (<https://github.com/ssato>)
 
 <!-- vim:sw=2:ts=2:et:
 -->
