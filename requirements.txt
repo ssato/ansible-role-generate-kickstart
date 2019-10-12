@@ -1,4 +1,5 @@
 ansible
-yamllint
 ansible-lint
+molecule
 pykickstart
+yamllint
