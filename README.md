@@ -1,6 +1,6 @@
 # ssato.generate_kickstart
 
-A ansible role to generate kickstart installation files.
+This is an example ansible role to generate kickstart installation files.
 
 [![Build Status](https://img.shields.io/travis/ssato/ansible-role-generate-kickstart.png)](https://travis-ci.org/ssato/ansible-role-generate-kickstart)
 
@@ -19,7 +19,7 @@ MIT
 
 ## Author
 
-Satoru SATOH `ssato@Github <https://github.com/ssato>`_
+Satoru SATOH `ssato@Github <https://github.com/ssato>`
 
 <!-- vim:sw=2:ts=2:et:
 -->
