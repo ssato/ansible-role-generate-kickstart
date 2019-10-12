@@ -3,6 +3,11 @@
 This is an example ansible role to generate kickstart installation files.
 
 [![Build Status](https://img.shields.io/travis/ssato/ansible-role-generate-kickstart.png)](https://travis-ci.org/ssato/ansible-role-generate-kickstart)
+<!--
+How to get the role ID:
+ansible-galaxy info ssato.generate_kickstart | sed -nr "s/[[:blank:]]+id: ([[:digit:]]+)/\1/p"
+-->
+[![Ansible Galaxy](https://img.shields.io/ansible/role/43954.svg)](https://galaxy.ansible.com/ssato/generate_kickstart)
 
 ## Requirements
 
